@@ -15,6 +15,7 @@ class GetFilter {
     let router = Router()
     let numCol: MongoKitten.Collection!
     let mesCol: MongoKitten.Collection!
+    let userCol: MongoKitten.Collection!
     
     init() throws {
         guard CommandLine.argc == 3 else {
@@ -25,11 +26,13 @@ class GetFilter {
         let db = Database(named: "rule", atServer: server)
         self.numCol = db["number"]
         self.mesCol = db["message"]
-        router.post("new", handler: createBumpRule)
+        self.userCol = db["user"]
+        router.post("rule", handler: createBumpRule)
+        router.delete("rule", handler: deleteRule)
         router.get("user", handler: userRules)
         router.get("country", handler: countryRules)
     }
-
+    
     func createBumpRule(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
         do {
             guard let str = try request.readString(), let bytes = Data(base64Encoded: str)?.bytes else {
@@ -39,16 +42,24 @@ class GetFilter {
             }
             
             let decrypted = try ChaCha20.init(key: CommandLine.arguments[2], iv: String(CommandLine.arguments[2].prefix(12))).decrypt(bytes)
-
-            guard var rule = try? JSONDecoder().decode(Number.self, from: Data(bytes: decrypted)), rule.u.count > 3, !(rule.w != nil) else {
+            
+            guard var userRule = try? JSONDecoder().decode(UserRule.self, from: Data(bytes: decrypted)), userRule.y.count > 0, userRule.u.count > 0, userRule.id.count == 24 else {
                 response.send(status: .notAcceptable)
                 next()
                 return
             }
             
-            if let message = rule.m {
+            if var update = try self.userCol.findOne(Query(["_id": try ObjectId(userRule.id)] as Document)) {
+                update["d"] = Date()
+                try self.userCol.findAndUpdate(Query(["_id": try ObjectId(userRule.id)] as Document), with: update)
+                response.send(status: .OK)
+                next()
+                return
+            }
+            
+            if let message = userRule.m {
                 let status: Message.Status
-                if rule.r == .a {
+                if userRule.r == .a {
                     status = .ham
                 }else{
                     status = .spam
@@ -56,31 +67,46 @@ class GetFilter {
                 try mesCol.append(Message(m: message, s: status).doc())
             }
             
-
-            if var exist = try numCol.findOne(Query(rule.doc(mode: .find))) {
-                
-                if rule.r == .a {
-                    exist["w"] = Int(exist["w"])! + 1
-                }else{
-                    exist["w"] = Int(exist["w"])! - 1
+            if let number = userRule.n {
+                if var exist = try numCol.findOne(Query(["n": number, "y": userRule.y])) {
+                    
+                    if userRule.r == .a {
+                        exist["w"] = Int(exist["w"])! + 1
+                    }else{
+                        exist["w"] = Int(exist["w"])! - 1
+                    }
+                    
+                    exist["d"] = Date()
+                    
+                    try self.numCol.update(Query(["n" == number, "y" == userRule.y]), to: exist)
+                } else {
+                    let newNumber = Number(d: Date(), n: number, w: userRule.r == .a ? 1 : 0, y: userRule.y)
+                    try self.numCol.append(newNumber.doc())
                 }
-                
-                exist["d"] = Date()
-                
-                try self.numCol.update(Query(rule.doc(mode: .find)), to: exist)
-                response.send(status: .accepted)
+            }
+            
+            userRule.d = Date()
+            
+            try self.userCol.append(userRule.doc())
+            response.send(status: .OK)
+            next()
+        } catch let err {
+            print(err)
+            response.send(status: .internalServerError)
+            next()
+        }
+    }
+    
+    func deleteRule(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
+        do {
+            guard let user = request.queryParameters["user"], let id = request.queryParameters["id"] else {
+                response.send(status: .notAcceptable)
                 next()
                 return
             }
             
-            if rule.r == .a {
-                rule.w = 1
-            }else {
-                rule.w = -1
-            }
-            rule.d = Date()
-
-            try self.numCol.append(rule.doc(mode: .plain))
+            let q: Query = "_id" == (try ObjectId(id)) && "u" == user
+            try self.userCol.findAndRemove(q)
             response.send(status: .OK)
             next()
         } catch let err {
@@ -103,15 +129,19 @@ class GetFilter {
                 skip = skipi
             }
             
-            let query = Query(["u": user] as Document)
-            let matchingEntities: CollectionSlice<Document> = try self.numCol.find(query, skipping: skip, limitedTo: 1000)
-            let amountOfMatchingEntities: Int = try self.numCol.count(query)
+            var date = Date(timeIntervalSince1970: 0)
+            if let dateq = request.queryParameters["date"], let datei = Int(dateq) {
+                date = Date(timeIntervalSince1970: TimeInterval(datei))
+            }
+            
+            
+            let q: Query = "u" == user && "d" >= date
+            let matchingEntities: CollectionSlice<Document> = try self.userCol.find(q, skipping: skip, limitedTo: 1000)
             
             let all = matchingEntities.map { (doc) -> [String: Any] in
-                var noID = doc
-                noID.removeValue(forKey: "_id")
-                noID.removeValue(forKey: "d")
-                return noID.dictionaryRepresentation
+                var noDate = doc
+                noDate.removeValue(forKey: "d")
+                return noDate.dictionaryRepresentation
             }
             
             let encrypted = try ChaCha20.init(key: CommandLine.arguments[2], iv: String(CommandLine.arguments[2].prefix(12))).encrypt(all.makeBinary())
@@ -166,7 +196,7 @@ class GetFilter {
     }
 }
 
-struct Number: Codable {
+struct UserRule: Codable {
     enum ContentType: String, Codable {
         case t
         case n
@@ -177,38 +207,40 @@ struct Number: Codable {
         case b
     }
     
-    enum QueryMode {
-        case find
-        case plain
+    let id: String
+    var d: Date?
+    let m: String?
+    let n: String?
+    let r: Rule
+    let u: String
+    let y: String
+    
+    var _id: ObjectId {
+        let new = String(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased().prefix(24))
+        do {
+            return try ObjectId(id)
+        }catch{
+            return try! ObjectId(new)
+        }
     }
     
-    var _id: ObjectId? = try! ObjectId(String(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased().prefix(24)))
-    var d: Date?
-    let n: String // Number
-    let m: String? // Message
-    let r: Rule // Rule
-    let u: String // User
-    let y: String // Country
-    var w: Int? // Weight
-    
-    func doc(mode: QueryMode) -> Document {
-        
-        switch mode {
-        case .find:
-            return ["n": n,
-                    "r": r.rawValue,
-                    "y": y,
-                    ] as Document
-        case .plain:
-            return ["_id": _id,
-                    "d": d,
-                    "n": n,
-                    "r": r.rawValue,
-                    "u": u,
-                    "y": y,
-                    "w": w,
-                    ] as Document
+    var t: ContentType {
+        if (m != nil) {
+            return .t
         }
+        return .n
+    }
+    
+    func doc() -> Document {
+        return ["_id": _id,
+                "d": d,
+                "m": m,
+                "n": n,
+                "r": r.rawValue,
+                "t": t.rawValue,
+                "u": u,
+                "y": y
+            ] as Document
     }
 }
 
@@ -225,6 +257,23 @@ struct Message {
         return ["m": m,
                 "d": d,
                 "s": s.rawValue
+            ] as Document
+    }
+}
+
+struct Number {
+    let _id = try! ObjectId(String(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased().prefix(24)))
+    let d: Date
+    let n: String // Number
+    let w: Int // Weight
+    let y: String // Country
+    
+    func doc() -> Document {
+        return ["_id": _id,
+                "d": d,
+                "n": n,
+                "w": w,
+                "y": y
             ] as Document
     }
 }
