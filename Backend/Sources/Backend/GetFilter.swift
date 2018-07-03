@@ -168,11 +168,16 @@ class GetFilter {
                 skip = skipi
             }
             
+            var date = Date(timeIntervalSince1970: 0)
+            if let dateq = request.queryParameters["date"], let datei = Int(dateq) {
+                date = Date(timeIntervalSince1970: TimeInterval(datei))
+            }
+            
             var result: [String: [[String: Any]]] = [:]
             
             try countries.forEach { (country) in
-                let query = Query(["y": country] as Document)
-                let matchingEntities: CollectionSlice<Document> = try self.numCol.find(query, skipping: skip, limitedTo: 1000)
+                let q: Query = "y" == country && "d" >= date
+                let matchingEntities: CollectionSlice<Document> = try self.numCol.find(q, skipping: skip, limitedTo: 1000)
                 let countryAll = matchingEntities.map { (doc) -> [String: Any] in
                     var noID = doc
                     noID.removeValue(forKey: "_id")
