@@ -35,7 +35,9 @@ class GetFilter {
     
     func createBumpRule(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
         do {
-            guard let str = try request.readString(), let bytes = Data(base64Encoded: str)?.bytes else {
+            var dd = Data()
+            try request.read(into: &dd)
+            guard dd.count > 0, let bytes = Data(base64Encoded: dd)?.bytes else {
                 response.send(status: .notAcceptable)
                 next()
                 return
@@ -78,7 +80,7 @@ class GetFilter {
                     
                     exist["d"] = Date()
                     
-                    try self.numCol.update(Query(["n" == number, "y" == userRule.y]), to: exist)
+                    try self.numCol.update(Query(["n": number, "y": userRule.y]), to: exist)
                 } else {
                     let newNumber = Number(d: Date(), n: number, w: userRule.r == .a ? 1 : 0, y: userRule.y)
                     try self.numCol.append(newNumber.doc())
@@ -99,7 +101,7 @@ class GetFilter {
     
     func deleteRule(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
         do {
-            guard let user = request.queryParameters["user"], let id = request.queryParameters["id"] else {
+            guard let user = request.headers["user"], let id = request.headers["id"] else {
                 response.send(status: .notAcceptable)
                 next()
                 return
@@ -118,19 +120,19 @@ class GetFilter {
     
     func userRules(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
         do {
-            guard let user = request.queryParameters["user"], user.count > 3 else {
+            guard let user = request.headers["user"], user.count > 3 else {
                 response.send(status: .notAcceptable)
                 next()
                 return
             }
             
             var skip = 0
-            if let skipq = request.queryParameters["skip"], let skipi = Int(skipq) {
+            if let skipq = request.headers["skip"], let skipi = Int(skipq) {
                 skip = skipi
             }
             
             var date = Date(timeIntervalSince1970: 0)
-            if let dateq = request.queryParameters["date"], let datei = Int(dateq) {
+            if let dateq = request.headers["date"], let datei = Int(dateq) {
                 date = Date(timeIntervalSince1970: TimeInterval(datei))
             }
             
@@ -156,7 +158,7 @@ class GetFilter {
     
     func countryRules(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
         do {
-            guard let countriesString = request.queryParameters["country"], countriesString.count > 1 else {
+            guard let countriesString = request.headers["country"], countriesString.count > 1 else {
                 response.send(status: .notAcceptable)
                 next()
                 return
@@ -164,12 +166,12 @@ class GetFilter {
             let countries = countriesString.components(separatedBy: "|")
             
             var skip = 0
-            if let skipq = request.queryParameters["skip"], let skipi = Int(skipq) {
+            if let skipq = request.headers["skip"], let skipi = Int(skipq) {
                 skip = skipi
             }
             
             var date = Date(timeIntervalSince1970: 0)
-            if let dateq = request.queryParameters["date"], let datei = Int(dateq) {
+            if let dateq = request.headers["date"], let datei = Int(dateq) {
                 date = Date(timeIntervalSince1970: TimeInterval(datei))
             }
             

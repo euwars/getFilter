@@ -1,0 +1,52 @@
+PODS:
+  - Alamofire (4.7.2)
+  - CryptoSwift (0.10.0)
+  - Moya (11.0.2):
+    - Moya/Core (= 11.0.2)
+  - Moya/Core (11.0.2):
+    - Alamofire (~> 4.1)
+    - Result (~> 3.0)
+  - PromiseKit (6.3.4):
+    - PromiseKit/CorePromise (= 6.3.4)
+    - PromiseKit/Foundation (= 6.3.4)
+    - PromiseKit/UIKit (= 6.3.4)
+  - PromiseKit/CorePromise (6.3.4)
+  - PromiseKit/Foundation (6.3.4):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.3.4):
+    - PromiseKit/CorePromise
+  - Result (3.2.4)
+  - SQLite.swift (0.11.5):
+    - SQLite.swift/standard (= 0.11.5)
+  - SQLite.swift/standard (0.11.5)
+  - Zephyr (3.1.2)
+
+DEPENDENCIES:
+  - CryptoSwift (~> 0.10.0)
+  - Moya (~> 11.0.2)
+  - PromiseKit (~> 6.3.4)
+  - SQLite.swift (~> 0.11.5)
+  - Zephyr (~> 3.1.2)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - CryptoSwift
+    - Moya
+    - PromiseKit
+    - Result
+    - SQLite.swift
+    - Zephyr
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
+  Moya: a725035953bc1c0eb1be505ab903984501d82440
+  PromiseKit: e1425568123ec844a944c93f2bcb29d511d39cf5
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
+  Zephyr: 7a3c2678c6bb935a13d7215ec9154956e8b4d209
+
+PODFILE CHECKSUM: 802b989ef6f2dffe4a0b31c4d27ba1fe14bca78e
+
+COCOAPODS: 1.5.3
