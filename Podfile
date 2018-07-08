@@ -7,6 +7,7 @@ pod 'Moya', '~> 11.0.2'
 pod 'PromiseKit', '~> 6.3.4'
 pod 'CryptoSwift', '~> 0.10.0'
 pod 'Zephyr', '~> 3.1.2'
+pod 'PhoneNumberKit', '~> 2.1.0'
 
 target 'Block' do
     # Comment the next line if you're not using Swift and don't want to use dynamic frameworks

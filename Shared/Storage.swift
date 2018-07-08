@@ -9,6 +9,7 @@
 import Foundation
 import SQLite
 import PromiseKit
+import PhoneNumberKit
 
 class Storage {
     // Database
@@ -58,13 +59,29 @@ class Storage {
         } catch { }
     }
     
-    func addUpdateRule(rule: UserRule) -> Promise<Int64> {
+    func newUpdateRule(rule: UserRule) -> Promise<Void> {
+        return firstly {
+            addUpdateRule(rule: rule)
+            }.then { (rowID) -> Promise<Void> in
+                return self.sendDataChangedNotification()
+        }
+    }
+    
+    func deleteRule(id: String) -> Promise<Void> {
+        return firstly {
+            removeUserRule(id: id)
+            }.then { (rowID) -> Promise<Void> in
+                return self.sendDataChangedNotification()
+        }
+    }
+    
+    private func addUpdateRule(rule: UserRule) -> Promise<Int64> {
         return Promise<Int64> { seal in
             do {
                 guard (rule.m != nil || rule.n != nil) else{
                     throw Errors.wrongRule
                 }
-                
+
                 let newRule = users.insert(id <- rule.id, m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, u <- rule.u, y <- rule.y, h <- rule.hidden, s <- rule.synced)
                 let ruleRow = try db.run(newRule)
                 
@@ -118,7 +135,7 @@ class Storage {
         }
     }
     
-    func removeUserRule(id: String) -> Promise<Void> {
+    private func removeUserRule(id: String) -> Promise<Void> {
         return Promise<Void> { seal in
             do {
                 let select = users.filter(self.id == id)

@@ -61,6 +61,14 @@ class RulesViewController: UIViewController, UISearchResultsUpdating  {
         let newRuleVC = NewRuleViewController()
         present(newRuleVC, animated: true, completion: nil)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selected = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selected, animated: animated)
+        }
+    }
 }
 
 extension RulesViewController: UITableViewDataSource {
@@ -80,5 +88,13 @@ extension RulesViewController: UITableViewDataSource {
             cell.backgroundColor = #colorLiteral(red: 0.1334325373, green: 0.1330040991, blue: 0.1455509365, alpha: 1)
         }
         return cell
+    }
+}
+
+extension RulesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let editRule = NewRuleViewController()
+        editRule.tempRule = gf.storage.rules[indexPath.row]
+        present(editRule, animated: true, completion: nil)
     }
 }

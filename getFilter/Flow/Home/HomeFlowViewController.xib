@@ -25,11 +25,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jfl-ns-tZJ">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="CvX-3E-Jb8">
-                    <rect key="frame" x="0.0" y="78" width="375" height="589"/>
+                    <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TGh-1K-4hW">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="589"/>
@@ -86,7 +86,7 @@
                 <constraint firstItem="Jfl-ns-tZJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RaE-aj-lGD"/>
                 <constraint firstAttribute="trailing" secondItem="CvX-3E-Jb8" secondAttribute="trailing" id="U96-YC-ATN"/>
                 <constraint firstItem="CvX-3E-Jb8" firstAttribute="top" secondItem="Jfl-ns-tZJ" secondAttribute="bottom" constant="4" id="XA0-Ok-SHU"/>
-                <constraint firstItem="CvX-3E-Jb8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="58" id="as3-b9-tnR"/>
+                <constraint firstItem="CvX-3E-Jb8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="48" id="as3-b9-tnR"/>
                 <constraint firstItem="Jfl-ns-tZJ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gfQ-n1-onc"/>
                 <constraint firstAttribute="bottom" secondItem="CvX-3E-Jb8" secondAttribute="bottom" id="sYZ-bs-ka4"/>
                 <constraint firstItem="Jfl-ns-tZJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="t6Z-1E-4Tg"/>

@@ -11,7 +11,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewRuleViewController">
             <connections>
+                <outlet property="allowView" destination="dKp-ed-01C" id="vbq-yY-n49"/>
+                <outlet property="blockView" destination="DOh-MD-oEd" id="WwV-XP-H2f"/>
+                <outlet property="deleteButton" destination="ApE-pD-G5C" id="W3y-6u-xUv"/>
+                <outlet property="numberField" destination="PpE-M1-6b5" id="Dql-NK-6gI"/>
+                <outlet property="phoneView" destination="2Na-39-cgM" id="dfB-6Q-XEV"/>
+                <outlet property="saveButton" destination="jWu-5c-AJ5" id="VqY-Lh-WI6"/>
                 <outlet property="textField" destination="qtz-TZ-NYV" id="mav-5d-aT3"/>
+                <outlet property="textView" destination="Kb0-OA-Vrt" id="YzP-O1-2If"/>
+                <outlet property="titleLabel" destination="OTf-fc-66g" id="hEO-yW-boB"/>
                 <outlet property="view" destination="iN0-l3-epB" id="bxA-Aa-tRo"/>
             </connections>
         </placeholder>
@@ -35,8 +43,8 @@
                                 <action selector="cancelTapped:" destination="-1" eventType="touchUpInside" id="Sym-7w-7uP"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NewRule" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTf-fc-66g">
-                            <rect key="frame" x="25" y="28" width="67" height="28"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Rule" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTf-fc-66g">
+                            <rect key="frame" x="25" y="28" width="70.5" height="28"/>
                             <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -134,46 +142,6 @@ phone number</string>
                         <outlet property="titleLabel" destination="2al-M8-tko" id="5MM-Y4-yvt"/>
                     </connections>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6AS-X0-lNo">
-                    <rect key="frame" x="0.0" y="284" width="375" height="156"/>
-                    <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter phone number to block" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qtz-TZ-NYV">
-                            <rect key="frame" x="25" y="95" width="325" height="39"/>
-                            <color key="backgroundColor" red="0.11378719657659531" green="0.11351082473993301" blue="0.12186912447214127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="39" id="gM7-Lp-JyJ"/>
-                            </constraints>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rule Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t80-MV-GC4">
-                            <rect key="frame" x="25" y="21" width="70" height="18"/>
-                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC7-By-qNP">
-                            <rect key="frame" x="25" y="44" width="131.5" height="33.5"/>
-                            <string key="text">Your rule will act
-based on your input</string>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                            <color key="textColor" white="1" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" red="0.090221397580000001" green="0.090093500909999999" blue="0.094263233239999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstItem="qtz-TZ-NYV" firstAttribute="leading" secondItem="6AS-X0-lNo" secondAttribute="leading" constant="25" id="MG7-4F-NhZ"/>
-                        <constraint firstItem="iC7-By-qNP" firstAttribute="leading" secondItem="6AS-X0-lNo" secondAttribute="leading" constant="25" id="PvA-nX-tb7"/>
-                        <constraint firstAttribute="trailing" secondItem="qtz-TZ-NYV" secondAttribute="trailing" constant="25" id="QRe-qN-pQr"/>
-                        <constraint firstItem="iC7-By-qNP" firstAttribute="top" secondItem="t80-MV-GC4" secondAttribute="bottom" constant="5" id="T0Z-xm-HQg"/>
-                        <constraint firstItem="t80-MV-GC4" firstAttribute="top" secondItem="6AS-X0-lNo" secondAttribute="top" constant="21" id="Uxh-bQ-zZS"/>
-                        <constraint firstAttribute="bottom" secondItem="qtz-TZ-NYV" secondAttribute="bottom" constant="22" id="hu2-Ff-coW"/>
-                        <constraint firstAttribute="height" constant="156" id="ktk-SD-Rq8"/>
-                        <constraint firstItem="t80-MV-GC4" firstAttribute="leading" secondItem="6AS-X0-lNo" secondAttribute="leading" constant="25" id="kvs-Mm-1BS"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kb0-OA-Vrt" customClass="SelectiveView" customModule="getFilter" customModuleProvider="target">
                     <rect key="frame" x="189.5" y="68" width="185.5" height="154"/>
                     <subviews>
@@ -252,6 +220,63 @@ SMS text message</string>
                         <outlet property="titleLabel" destination="p4N-ew-iC9" id="DdR-ae-AJY"/>
                     </connections>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6AS-X0-lNo">
+                    <rect key="frame" x="0.0" y="284" width="375" height="156"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter phone number to block" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qtz-TZ-NYV">
+                            <rect key="frame" x="25" y="95" width="325" height="39"/>
+                            <color key="backgroundColor" red="0.11378719657659531" green="0.11351082473993301" blue="0.12186912447214127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="39" id="gM7-Lp-JyJ"/>
+                            </constraints>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="rmZ-eu-IHm"/>
+                            </connections>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rule Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t80-MV-GC4">
+                            <rect key="frame" x="25" y="21" width="70" height="18"/>
+                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC7-By-qNP">
+                            <rect key="frame" x="25" y="44" width="131.5" height="33.5"/>
+                            <string key="text">Your rule will act
+based on your input</string>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PpE-M1-6b5" customClass="PhoneNumberTextField" customModule="PhoneNumberKit">
+                            <rect key="frame" x="25" y="95" width="325" height="39"/>
+                            <color key="backgroundColor" red="0.11378719657659531" green="0.11351082473993301" blue="0.12186912447214127" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="7MU-ae-3yl"/>
+                            </connections>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" red="0.090221397580000001" green="0.090093500909999999" blue="0.094263233239999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="PpE-M1-6b5" firstAttribute="height" secondItem="qtz-TZ-NYV" secondAttribute="height" id="4z8-MY-KUS"/>
+                        <constraint firstItem="PpE-M1-6b5" firstAttribute="centerY" secondItem="qtz-TZ-NYV" secondAttribute="centerY" id="7jz-Jg-Nxx"/>
+                        <constraint firstItem="PpE-M1-6b5" firstAttribute="width" secondItem="qtz-TZ-NYV" secondAttribute="width" id="Bsx-ZP-aLW"/>
+                        <constraint firstItem="PpE-M1-6b5" firstAttribute="centerX" secondItem="qtz-TZ-NYV" secondAttribute="centerX" id="EON-hj-iEE"/>
+                        <constraint firstItem="qtz-TZ-NYV" firstAttribute="leading" secondItem="6AS-X0-lNo" secondAttribute="leading" constant="25" id="MG7-4F-NhZ"/>
+                        <constraint firstItem="iC7-By-qNP" firstAttribute="leading" secondItem="6AS-X0-lNo" secondAttribute="leading" constant="25" id="PvA-nX-tb7"/>
+                        <constraint firstAttribute="trailing" secondItem="qtz-TZ-NYV" secondAttribute="trailing" constant="25" id="QRe-qN-pQr"/>
+                        <constraint firstItem="iC7-By-qNP" firstAttribute="top" secondItem="t80-MV-GC4" secondAttribute="bottom" constant="5" id="T0Z-xm-HQg"/>
+                        <constraint firstItem="t80-MV-GC4" firstAttribute="top" secondItem="6AS-X0-lNo" secondAttribute="top" constant="21" id="Uxh-bQ-zZS"/>
+                        <constraint firstAttribute="bottom" secondItem="qtz-TZ-NYV" secondAttribute="bottom" constant="22" id="hu2-Ff-coW"/>
+                        <constraint firstAttribute="height" constant="156" id="ktk-SD-Rq8"/>
+                        <constraint firstItem="t80-MV-GC4" firstAttribute="leading" secondItem="6AS-X0-lNo" secondAttribute="leading" constant="25" id="kvs-Mm-1BS"/>
+                    </constraints>
+                </view>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="lCD-XK-8lA">
                     <rect key="frame" x="0.0" y="444" width="375" height="54"/>
                     <subviews>
@@ -262,14 +287,23 @@ SMS text message</string>
                             <state key="normal" title="Delete">
                                 <color key="titleColor" white="1" alpha="0.39899935787671231" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <connections>
+                                <action selector="deleteTapped:" destination="-1" eventType="touchUpInside" id="iT3-gr-zou"/>
+                            </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWu-5c-AJ5">
+                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWu-5c-AJ5">
                             <rect key="frame" x="189.5" y="0.0" width="185.5" height="54"/>
                             <color key="backgroundColor" red="0.22335278987884521" green="0.12766209244728088" blue="0.50645482540130615" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                             <state key="normal" title="Save">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </state>
+                            <state key="disabled">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="saveTapped:" destination="-1" eventType="touchUpInside" id="aeO-3i-5XY"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>

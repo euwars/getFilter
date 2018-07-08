@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PhoneNumberKit
 
 class RuleTableViewCell: UITableViewCell {
     
@@ -19,7 +20,9 @@ class RuleTableViewCell: UITableViewCell {
             contentLabel.text = m
             contentTypeLabel.text = "Text"
         }else if let n = rule.n {
-            contentLabel.text = n
+            let phoneNumberKit = PhoneNumberKit()
+            let phoneNumber = try! phoneNumberKit.parse(n)
+            contentLabel.text = phoneNumberKit.format(phoneNumber, toType: .national)
             contentTypeLabel.text = "Number"
         }
         
