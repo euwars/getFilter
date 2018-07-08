@@ -40,6 +40,10 @@
 		80B3F81120F159B20090970D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8003B1E820F02F3E007F708F /* Storage.swift */; };
 		80B3F81220F159B30090970D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8003B1E820F02F3E007F708F /* Storage.swift */; };
 		80B3F81320F159B30090970D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8003B1E820F02F3E007F708F /* Storage.swift */; };
+		80B3F81620F211FD0090970D /* NewRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3F81520F211FD0090970D /* NewRuleViewController.swift */; };
+		80B3F81820F212070090970D /* NewRuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B3F81720F212070090970D /* NewRuleViewController.xib */; };
+		80B3F81A20F212D90090970D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3F81920F212D90090970D /* SettingsViewController.swift */; };
+		80B3F81C20F212E40090970D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B3F81B20F212E40090970D /* SettingsViewController.xib */; };
 		80BE768020DD10C4001F66CC /* ToggleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE767F20DD10C4001F66CC /* ToggleViewController.swift */; };
 		80BE768320DD10DF001F66CC /* ToggleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80BE768220DD10DF001F66CC /* ToggleViewController.xib */; };
 		80BE768620DD1222001F66CC /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE768520DD1222001F66CC /* Transition.swift */; };
@@ -133,6 +137,10 @@
 		809A534720E8F90600AB93BD /* Unwanted.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Unwanted.entitlements; sourceTree = "<group>"; };
 		809A534820E8F90C00AB93BD /* Block.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Block.entitlements; sourceTree = "<group>"; };
 		809FE59620F002F70014FE6A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		80B3F81520F211FD0090970D /* NewRuleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRuleViewController.swift; sourceTree = "<group>"; };
+		80B3F81720F212070090970D /* NewRuleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewRuleViewController.xib; sourceTree = "<group>"; };
+		80B3F81920F212D90090970D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		80B3F81B20F212E40090970D /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		80BE767F20DD10C4001F66CC /* ToggleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleViewController.swift; sourceTree = "<group>"; };
 		80BE768220DD10DF001F66CC /* ToggleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToggleViewController.xib; sourceTree = "<group>"; };
 		80BE768520DD1222001F66CC /* Transition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transition.swift; sourceTree = "<group>"; };
@@ -331,7 +339,9 @@
 			isa = PBXGroup;
 			children = (
 				802E5E6E20E68C4B00DEB75A /* Bar */,
+				80B3F81D20F212E80090970D /* Settings */,
 				80BE768120DD10C9001F66CC /* Toggle */,
+				80B3F81420F211E90090970D /* NewRule */,
 				8037E5E120DD224A00E7B911 /* Rules */,
 			);
 			path = VC;
@@ -362,6 +372,24 @@
 				808AEF8C20D1AE4D00BD4108 /* HomeFlowViewController.xib */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		80B3F81420F211E90090970D /* NewRule */ = {
+			isa = PBXGroup;
+			children = (
+				80B3F81520F211FD0090970D /* NewRuleViewController.swift */,
+				80B3F81720F212070090970D /* NewRuleViewController.xib */,
+			);
+			path = NewRule;
+			sourceTree = "<group>";
+		};
+		80B3F81D20F212E80090970D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				80B3F81920F212D90090970D /* SettingsViewController.swift */,
+				80B3F81B20F212E40090970D /* SettingsViewController.xib */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		80BE768120DD10C9001F66CC /* Toggle */ = {
@@ -576,8 +604,10 @@
 				808AEF8D20D1AE4D00BD4108 /* HomeFlowViewController.xib in Resources */,
 				8037E5E520DD226400E7B911 /* RulesViewController.xib in Resources */,
 				808AEF8520D1AD3B00BD4108 /* RootNavigationViewController.xib in Resources */,
+				80B3F81820F212070090970D /* NewRuleViewController.xib in Resources */,
 				8064737720D072D80058093B /* LaunchScreen.storyboard in Resources */,
 				8064737420D072D80058093B /* Assets.xcassets in Resources */,
+				80B3F81C20F212E40090970D /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -725,9 +755,11 @@
 				8038F30F20D0895A00119BB2 /* GetFilterSpamClassification.mlmodel in Sources */,
 				80BFBEE220DE4C98001CC0A6 /* RuleTableViewCell.swift in Sources */,
 				8003B1E920F02F3E007F708F /* Storage.swift in Sources */,
+				80B3F81A20F212D90090970D /* SettingsViewController.swift in Sources */,
 				8037E5E320DD225E00E7B911 /* RulesViewController.swift in Sources */,
 				8064736D20D072D80058093B /* AppDelegate.swift in Sources */,
 				802E5E6B20E68C0400DEB75A /* BarViewController.swift in Sources */,
+				80B3F81620F211FD0090970D /* NewRuleViewController.swift in Sources */,
 				808AEF8A20D1AE3400BD4108 /* HomeFlowViewController.swift in Sources */,
 				808AEF8720D1AD4300BD4108 /* RootNavigationViewController.swift in Sources */,
 			);
