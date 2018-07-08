@@ -56,6 +56,11 @@ class RulesViewController: UIViewController, UISearchResultsUpdating  {
     func updateSearchResults(for searchController: UISearchController) {
         
     }
+    
+    @IBAction func newRuleTapped(_ sender: UIButton) {
+        let newRuleVC = NewRuleViewController()
+        present(newRuleVC, animated: true, completion: nil)
+    }
 }
 
 extension RulesViewController: UITableViewDataSource {

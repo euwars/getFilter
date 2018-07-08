@@ -24,5 +24,6 @@ class RuleTableViewCell: UITableViewCell {
         }
         
         ruleImageView.image = rule.r == .a ? UIImage(named: "Allow") : UIImage(named: "Block")
+        ruleImageView.tintColor = rule.r == .a ? #colorLiteral(red: 0, green: 0.8157687783, blue: 0.1033710912, alpha: 1) : #colorLiteral(red: 0.9146965146, green: 0.3095251918, blue: 0.2168177068, alpha: 1)
     }
 }

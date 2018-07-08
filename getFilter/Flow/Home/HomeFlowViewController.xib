@@ -24,16 +24,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fQg-3U-ghZ">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jfl-ns-tZJ">
-                    <rect key="frame" x="0.0" y="20" width="375" height="54"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="54" id="JAB-PR-QMc"/>
-                    </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" translatesAutoresizingMaskIntoConstraints="NO" id="CvX-3E-Jb8">
                     <rect key="frame" x="0.0" y="78" width="375" height="589"/>
@@ -89,17 +82,14 @@
             </subviews>
             <color key="backgroundColor" red="0.090221397578716278" green="0.090093500912189484" blue="0.094263233244419098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="fQg-3U-ghZ" secondAttribute="trailing" id="2fz-9A-JQn"/>
                 <constraint firstItem="CvX-3E-Jb8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="CsD-o0-oHf"/>
+                <constraint firstItem="Jfl-ns-tZJ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="RaE-aj-lGD"/>
                 <constraint firstAttribute="trailing" secondItem="CvX-3E-Jb8" secondAttribute="trailing" id="U96-YC-ATN"/>
                 <constraint firstItem="CvX-3E-Jb8" firstAttribute="top" secondItem="Jfl-ns-tZJ" secondAttribute="bottom" constant="4" id="XA0-Ok-SHU"/>
-                <constraint firstItem="fQg-3U-ghZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="egb-hL-4as"/>
-                <constraint firstItem="Jfl-ns-tZJ" firstAttribute="top" secondItem="fQg-3U-ghZ" secondAttribute="bottom" id="f6K-a5-2Sm"/>
+                <constraint firstItem="CvX-3E-Jb8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="58" id="as3-b9-tnR"/>
                 <constraint firstItem="Jfl-ns-tZJ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gfQ-n1-onc"/>
                 <constraint firstAttribute="bottom" secondItem="CvX-3E-Jb8" secondAttribute="bottom" id="sYZ-bs-ka4"/>
                 <constraint firstItem="Jfl-ns-tZJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="t6Z-1E-4Tg"/>
-                <constraint firstItem="fQg-3U-ghZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ynz-lm-vvJ"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="top" secondItem="fQg-3U-ghZ" secondAttribute="bottom" id="zzD-k7-bh7"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="24.5" y="51.5"/>

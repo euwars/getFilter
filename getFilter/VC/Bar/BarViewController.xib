@@ -19,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="408" height="70"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jeremy-galliani-697655-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="9og-E2-S9a">
+                <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="9og-E2-S9a">
                     <rect key="frame" x="0.0" y="0.0" width="408" height="70"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </imageView>
@@ -58,6 +58,6 @@
     </objects>
     <resources>
         <image name="Settings" width="24" height="24"/>
-        <image name="jeremy-galliani-697655-unsplash" width="2848" height="4288"/>
+        <image name="bg" width="904" height="205"/>
     </resources>
 </document>

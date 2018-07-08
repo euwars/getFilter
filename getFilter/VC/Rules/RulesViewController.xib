@@ -68,6 +68,9 @@
                             <state key="normal" image="New">
                                 <color key="titleColor" red="0.22757992148399353" green="0.22701585292816162" blue="0.24374052882194519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="newRuleTapped:" destination="-1" eventType="touchUpInside" id="zGr-1v-6Pz"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.133432537317276" green="0.13300409913063049" blue="0.145550936460495" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
