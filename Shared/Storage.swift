@@ -81,11 +81,20 @@ class Storage {
                 guard (rule.m != nil || rule.n != nil) else{
                     throw Errors.wrongRule
                 }
-
-                let newRule = users.insert(id <- rule.id, m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, u <- rule.u, y <- rule.y, h <- rule.hidden, s <- rule.synced)
-                let ruleRow = try db.run(newRule)
                 
-                seal.fulfill(ruleRow)
+                
+                let local = users.filter(id == rule.id)
+                let count = try db.scalar(local.count)
+
+                if count > 0 {
+                    try db.run(local.update(m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, s <- rule.synced))
+                    seal.fulfill(0)
+                } else {
+                    let newRule = users.insert(id <- rule.id, m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, u <- rule.u, y <- rule.y, h <- rule.hidden, s <- rule.synced)
+                    let ruleRow = try db.run(newRule)
+                    seal.fulfill(ruleRow)
+                }
+
             } catch let err {
                 seal.reject(err)
             }
@@ -167,13 +176,13 @@ struct UserRule: Codable {
     }
     
     let id: String
-    let m: String?
-    let n: String?
+    var m: String?
+    var n: String?
     let r: Rule
     let u: String
     let y: String
     let hidden: Bool
-    let synced: Bool
+    var synced: Bool
     
     init(m: String?, n: String?, r: Rule, u: String, y: String) {
         id = String(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased().prefix(24))

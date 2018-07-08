@@ -52,9 +52,23 @@ class NewRuleViewController: UIViewController, SelectiveViewDelegate, UITextFiel
             return
         }
         
+        saveButton.isEnabled = true
+        
+        if let _ = tempRule.n {
+            selectiveDidTap(selective: phoneView)
+        }else {
+            selectiveDidTap(selective: textView)
+        }
+        
+        if tempRule.r == .a {
+            selectiveDidTap(selective: allowView)
+        }else {
+            selectiveDidTap(selective: blockView)
+        }
+        
         titleLabel.text = "Update Rule"
-        textField.text = tempRule.n
-        numberField.text = tempRule.m
+        textField.text = tempRule.m
+        numberField.text = tempRule.n
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -86,7 +100,12 @@ class NewRuleViewController: UIViewController, SelectiveViewDelegate, UITextFiel
             text = textField.text
         }
         
-        gf.storage.newUpdateRule(rule: UserRule(m: text, n: number, r: (allowView.isSelected ? .a : .b), u: currentUser, y: numberField.defaultRegion)).done { () in
+        tempRule?.n = number
+        tempRule?.m = text
+        tempRule?.synced = false
+        
+        let rule = (tempRule != nil) ? tempRule! : UserRule(m: text, n: number, r: (allowView.isSelected ? .a : .b), u: currentUser, y: numberField.defaultRegion)
+        gf.storage.newUpdateRule(rule: rule).done { () in
             self.dismiss(animated: true, completion: nil)
             }.catch { (err) in
                 print(err)
