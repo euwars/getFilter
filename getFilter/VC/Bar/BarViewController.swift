@@ -11,4 +11,9 @@ import UIKit
 class BarViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) { fatalError("...") }
     init() { super.init(nibName: nil, bundle: nil) }
+    
+    @IBAction func settingsTapped(_ sender: UIButton) {
+        let settingsVC = SettingsViewController()
+        present(settingsVC, animated: true, completion: nil)
+    }
 }
