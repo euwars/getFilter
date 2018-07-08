@@ -75,7 +75,7 @@ extension RulesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = gf.storage.rules.count
         noruleLabel.isHidden = count == 0 ? false : true
-        delegate.updateHeight(const: count == 0 ? UIScreen.main.bounds.height - 260 : (54.0 * CGFloat(count)) + 108)
+        delegate.updateHeight(const: count == 0 ? UIScreen.main.bounds.height - 260 : (60.0 * CGFloat(count)) + 108)
         return count
     }
     
