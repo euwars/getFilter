@@ -14,6 +14,7 @@ enum GetFilterProvider {
     case addUpdateRule(encrypted: String)
     case removeRule(user: String, id: String)
     case userRules(user: String, lastSync: Date?, skip: Int?)
+    case deletedRules(user: String, lastSync: Date?)
     case countryRules(country: String, lastSync: Date?, skip: Int?)
 }
 
@@ -28,6 +29,8 @@ extension GetFilterProvider: TargetType {
             return "rule"
         case .userRules:
             return "user"
+        case .deletedRules:
+            return "deleted"
         case .countryRules:
             return "country"
         }
@@ -39,7 +42,7 @@ extension GetFilterProvider: TargetType {
             return .post
         case .removeRule:
             return .delete
-        case .userRules, .countryRules:
+        case .userRules, .deletedRules, .countryRules:
             return .get
         }
     }
@@ -61,7 +64,7 @@ extension GetFilterProvider: TargetType {
         var headers: [String : String]? = nil
         switch self {
         case .addUpdateRule:
-            return ["Content-Type" : "text/plain; charset=utf-8"]
+            return nil
         case .removeRule(let user, let id):
             headers = [:]
             headers!["user"] = user
@@ -76,6 +79,13 @@ extension GetFilterProvider: TargetType {
             
             if let skip = skip {
                 headers!["skip"] = "\(skip)"
+            }
+        case .deletedRules(let user, let lastSync):
+            headers = [:]
+            headers!["user"] = user
+            
+            if let lastSync = lastSync {
+                headers!["date"] = "\(lastSync.timeIntervalSince1970)"
             }
         case .countryRules(let country, let lastSync, let skip):
             headers = [:]

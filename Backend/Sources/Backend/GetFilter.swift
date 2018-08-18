@@ -16,6 +16,7 @@ class GetFilter {
     let numCol: MongoKitten.Collection!
     let mesCol: MongoKitten.Collection!
     let userCol: MongoKitten.Collection!
+    let delCol: MongoKitten.Collection!
     
     init() throws {
         guard CommandLine.argc == 3 else {
@@ -27,9 +28,11 @@ class GetFilter {
         self.numCol = db["number"]
         self.mesCol = db["message"]
         self.userCol = db["user"]
+        self.delCol = db["deleted"]
         router.post("rule", handler: createBumpRule)
         router.delete("rule", handler: deleteRule)
         router.get("user", handler: userRules)
+        router.get("deleted", handler: deletedRules)
         router.get("country", handler: countryRules)
     }
     
@@ -82,7 +85,7 @@ class GetFilter {
                     
                     try self.numCol.update(Query(["n": number, "y": userRule.y]), to: exist)
                 } else {
-                    let newNumber = Number(d: Date(), n: number, w: userRule.r == .a ? 1 : 0, y: userRule.y)
+                    let newNumber = Number(d: Date(), n: number, w: userRule.r == .a ? 1 : -1, y: userRule.y)
                     try self.numCol.append(newNumber.doc())
                 }
             }
@@ -108,6 +111,24 @@ class GetFilter {
             }
             
             let q: Query = "_id" == (try ObjectId(id)) && "u" == user
+            if let userRule = try self.userCol.findOne(q), let number = userRule["n"], let rule = userRule["r"], let country = userRule["y"] {
+                if var exist = try numCol.findOne(Query(["n": number, "y": country])) {
+                    if String(rule) == "a" {
+                        exist["w"] = Int(exist["w"])! - 1
+                    }else{
+                        exist["w"] = Int(exist["w"])! + 1
+                    }
+                    
+                    exist["d"] = Date()
+                    
+                    try self.numCol.update(Query(["n": number, "y": country]), to: exist)
+                }
+            }
+            
+            
+            let removed = ["_id": try ObjectId(id), "d": Date(), "u": user] as Document
+            try self.delCol.append(removed)
+            
             try self.userCol.findAndRemove(q)
             response.send(status: .OK)
             next()
@@ -140,13 +161,43 @@ class GetFilter {
             let q: Query = "u" == user && "d" >= date
             let matchingEntities: CollectionSlice<Document> = try self.userCol.find(q, skipping: skip, limitedTo: 1000)
             
-            let all = matchingEntities.map { (doc) -> [String: Any] in
-                var noDate = doc
-                noDate.removeValue(forKey: "d")
-                return noDate.dictionaryRepresentation
+            let all = matchingEntities.map { (doc) -> UserRule in
+                let new = UserRule(id: (doc["_id"] as! ObjectId).hexString, d: nil, m: doc["m"] as? String, n: doc["n"] as? String, r: UserRule.Rule(rawValue: doc["r"] as! String)!, u: doc["u"] as! String, y: doc["y"] as! String)
+                return new
             }
             
-            let encrypted = try ChaCha20.init(key: CommandLine.arguments[2], iv: String(CommandLine.arguments[2].prefix(12))).encrypt(all.makeBinary())
+            let encoded = try JSONEncoder().encode(all)
+            let encrypted = try ChaCha20.init(key: CommandLine.arguments[2], iv: String(CommandLine.arguments[2].prefix(12))).encrypt(encoded.bytes)
+            response.send(Data(bytes: encrypted).base64EncodedString())
+            next()
+        } catch let err {
+            print(err)
+            response.send(status: .internalServerError)
+            next()
+        }
+    }
+    
+    func deletedRules(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
+        do {
+            guard let userString = request.headers["user"], userString.count > 1 else {
+                response.send(status: .notAcceptable)
+                next()
+                return
+            }
+            
+            var date = Date(timeIntervalSince1970: 0)
+            if let dateq = request.headers["date"], let datei = Int(dateq) {
+                date = Date(timeIntervalSince1970: TimeInterval(datei))
+            }
+            
+            let q: Query = "u" == userString && "d" >= date
+            let matchingEntities: CollectionSlice<Document> = try self.delCol.find(q, skipping: 0, limitedTo: 1000)
+            let all = matchingEntities.map { (doc) -> String in
+                return String(doc["_id"])!
+            }
+            
+            let encoded = try JSONEncoder().encode(all)
+            let encrypted = try ChaCha20.init(key: CommandLine.arguments[2], iv: String(CommandLine.arguments[2].prefix(12))).encrypt(encoded.bytes)
             response.send(Data(bytes: encrypted).base64EncodedString())
             next()
         } catch let err {
@@ -221,6 +272,8 @@ struct UserRule: Codable {
     let r: Rule
     let u: String
     let y: String
+    let hidden: Bool = false
+    let synced: Bool = true
     
     var _id: ObjectId {
         let new = String(UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased().prefix(24))

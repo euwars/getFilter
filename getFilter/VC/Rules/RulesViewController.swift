@@ -27,6 +27,7 @@ class RulesViewController: UIViewController, UISearchResultsUpdating  {
     init(delegate: RulesViewControllerDelegate) {
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
+        _ = gf.sync()
     }
 
     override func viewDidLoad() {
@@ -58,7 +59,7 @@ class RulesViewController: UIViewController, UISearchResultsUpdating  {
     }
     
     @IBAction func newRuleTapped(_ sender: UIButton) {
-        let newRuleVC = NewRuleViewController()
+        let newRuleVC = NewRuleViewController(gf: gf)
         present(newRuleVC, animated: true, completion: nil)
     }
     
@@ -75,7 +76,7 @@ extension RulesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = gf.storage.rules.count
         noruleLabel.isHidden = count == 0 ? false : true
-        delegate.updateHeight(const: count == 0 ? UIScreen.main.bounds.height - 260 : (60.0 * CGFloat(count)) + 108)
+        delegate.updateHeight(const: count == 0 ? UIScreen.main.bounds.height - 260 : (60.0 * CGFloat(count)) + 110)
         return count
     }
     
@@ -93,7 +94,7 @@ extension RulesViewController: UITableViewDataSource {
 
 extension RulesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let editRule = NewRuleViewController()
+        let editRule = NewRuleViewController(gf: gf)
         editRule.tempRule = gf.storage.rules[indexPath.row]
         present(editRule, animated: true, completion: nil)
     }

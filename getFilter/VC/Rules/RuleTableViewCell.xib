@@ -25,13 +25,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Baseball" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7mP-XQ-SaX">
-                        <rect key="frame" x="61" y="15" width="72.5" height="30"/>
+                        <rect key="frame" x="61" y="19.5" width="72.5" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEXT" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="80" translatesAutoresizingMaskIntoConstraints="NO" id="MuM-Y9-2bQ">
-                        <rect key="frame" x="289" y="15" width="80" height="30"/>
+                        <rect key="frame" x="289" y="22" width="80" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="Xct-yE-wVg"/>
                         </constraints>
@@ -43,13 +43,11 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="7mP-XQ-SaX" firstAttribute="leading" secondItem="Exu-M0-j53" secondAttribute="trailing" constant="18" id="6i3-6A-HPI"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="MuM-Y9-2bQ" secondAttribute="bottom" constant="4" id="NzC-Eb-14o"/>
+                    <constraint firstItem="MuM-Y9-2bQ" firstAttribute="centerY" secondItem="j11-Zp-ill" secondAttribute="centerY" id="NMN-YI-8Cf"/>
                     <constraint firstAttribute="trailing" secondItem="MuM-Y9-2bQ" secondAttribute="trailing" constant="23" id="TZl-41-v42"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="7mP-XQ-SaX" secondAttribute="bottom" constant="4" id="bsM-so-bFJ"/>
+                    <constraint firstItem="7mP-XQ-SaX" firstAttribute="centerY" secondItem="j11-Zp-ill" secondAttribute="centerY" id="XGt-DQ-kUe"/>
                     <constraint firstItem="Exu-M0-j53" firstAttribute="centerY" secondItem="j11-Zp-ill" secondAttribute="centerY" id="hlM-6r-G0p"/>
                     <constraint firstItem="Exu-M0-j53" firstAttribute="leading" secondItem="j11-Zp-ill" secondAttribute="leading" constant="25" id="nNx-6c-CXl"/>
-                    <constraint firstItem="7mP-XQ-SaX" firstAttribute="top" secondItem="j11-Zp-ill" secondAttribute="topMargin" constant="4" id="vCB-Ig-rsx"/>
-                    <constraint firstItem="MuM-Y9-2bQ" firstAttribute="top" secondItem="j11-Zp-ill" secondAttribute="topMargin" constant="4" id="wza-xH-PJ1"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.090221397580000001" green="0.090093500909999999" blue="0.094263233239999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

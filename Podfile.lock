@@ -1,11 +1,13 @@
 PODS:
   - Alamofire (4.7.2)
   - CryptoSwift (0.10.0)
+  - KeyboardWrapper (4.0.0)
   - Moya (11.0.2):
     - Moya/Core (= 11.0.2)
   - Moya/Core (11.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
+  - OneSignal (2.8.5)
   - PhoneNumberKit (2.1.0):
     - PhoneNumberKit/PhoneNumberKitCore (= 2.1.0)
     - PhoneNumberKit/UIKit (= 2.1.0)
@@ -29,7 +31,9 @@ PODS:
 
 DEPENDENCIES:
   - CryptoSwift (~> 0.10.0)
+  - KeyboardWrapper (~> 4.0.0)
   - Moya (~> 11.0.2)
+  - OneSignal (~> 2.8.5)
   - PhoneNumberKit (~> 2.1.0)
   - PromiseKit (~> 6.3.4)
   - SQLite.swift (~> 0.11.5)
@@ -39,7 +43,9 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - CryptoSwift
+    - KeyboardWrapper
     - Moya
+    - OneSignal
     - PhoneNumberKit
     - PromiseKit
     - Result
@@ -49,13 +55,15 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
+  KeyboardWrapper: 6b475a239d6cf16ca07961eb59255765e1a1c1cf
   Moya: a725035953bc1c0eb1be505ab903984501d82440
+  OneSignal: 42dae269c7eca517aee34963820e1eb922390031
   PhoneNumberKit: 62003f40ff75315fd3738286558bc365365ac222
   PromiseKit: e1425568123ec844a944c93f2bcb29d511d39cf5
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SQLite.swift: 6e5356850bb1791459f8c16d6ee9195b28714a2e
   Zephyr: 7a3c2678c6bb935a13d7215ec9154956e8b4d209
 
-PODFILE CHECKSUM: 6c390dd40091e70421e690e983eb377cef6f5ae6
+PODFILE CHECKSUM: d9af0b560acf4be3587a5c4c2791800bcda1d7b1
 
 COCOAPODS: 1.5.3

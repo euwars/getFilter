@@ -9,11 +9,12 @@
 import UIKit
 import PhoneNumberKit
 import CoreTelephony
+import CloudKit
+import KeyboardWrapper
 
 class NewRuleViewController: UIViewController, SelectiveViewDelegate, UITextFieldDelegate {
     
     required init?(coder aDecoder: NSCoder) { fatalError("...") }
-    init() { super.init(nibName: nil, bundle: nil) }
     
     @IBOutlet var phoneView: SelectiveView!
     @IBOutlet var textView: SelectiveView!
@@ -26,16 +27,27 @@ class NewRuleViewController: UIViewController, SelectiveViewDelegate, UITextFiel
     
     @IBOutlet var deleteButton: UIButton!
     @IBOutlet var saveButton: UIButton!
-    let gf = try! GetFilter(readOnly: false)
+    
+    @IBOutlet var phoneTopConstraint: NSLayoutConstraint!
+    @IBOutlet var textTopConstraint: NSLayoutConstraint!
 
+    let gf: GetFilter
+    var keyboardWrapper: KeyboardWrapper!
     var tempRule: UserRule?
     var currentUser: String!
     
+    init(gf: GetFilter) {
+        self.gf = gf
+        super.init(nibName: nil, bundle: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white.withAlphaComponent(0.4)])
         numberField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white.withAlphaComponent(0.4)])
 
+        keyboardWrapper = KeyboardWrapper(delegate: self)
+        
         phoneView.delegate = self
         textView.delegate = self
         allowView.delegate = self
@@ -44,7 +56,7 @@ class NewRuleViewController: UIViewController, SelectiveViewDelegate, UITextFiel
         _ = gf.getUser().done { (user) in
             self.currentUser = user
             }.catch { (err) in
-               print(err)
+                self.dismiss(animated: true, completion: nil)
         }
         
         guard let tempRule = tempRule else {
@@ -151,6 +163,10 @@ class NewRuleViewController: UIViewController, SelectiveViewDelegate, UITextFiel
         return true
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 protocol SelectiveViewDelegate {
@@ -210,5 +226,25 @@ class SelectiveView: UIView {
             default: break;
             }
         }
+    }
+}
+
+extension NewRuleViewController: KeyboardWrapperDelegate {
+    func keyboardWrapper(_ wrapper: KeyboardWrapper, didChangeKeyboardInfo info: KeyboardInfo) {
+        if info.state == .willShow || info.state == .visible {
+            let pad = view.frame.height - 500 - info.endFrame.size.height
+            if pad < 0 {
+                phoneTopConstraint.constant = pad
+                textTopConstraint.constant = pad
+            }else {
+                phoneTopConstraint.constant = 4
+                textTopConstraint.constant = 4
+            }
+        } else {
+            phoneTopConstraint.constant = 4
+            textTopConstraint.constant = 4
+        }
+        
+        view.layoutIfNeeded()
     }
 }

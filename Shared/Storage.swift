@@ -108,7 +108,7 @@ class Storage {
         }
     }
     
-    private func getUnsycned() -> Promise<([UserRule], [UserRule])> {
+    func getUnsycned() -> Promise<([UserRule], [UserRule])> {
         return Promise<([UserRule], [UserRule])> { seal in
             do {
                 let removedSelect = users.filter(h == true)
@@ -156,6 +156,18 @@ class Storage {
         }
     }
     
+    func fullyRemoveUserRule(id: String) -> Promise<Void> {
+        return Promise<Void> { seal in
+            do {
+                let select = users.filter(self.id == id)
+                try db.run(select.delete())
+                seal.fulfill(())
+            } catch let err {
+                seal.reject(err)
+            }
+        }
+    }
+    
     var rules: [UserRule] {
         let select = users.filter(h == false)
         guard let prepared = try? db.prepare(select) else { return [UserRule]() }
@@ -181,7 +193,7 @@ struct UserRule: Codable {
     let r: Rule
     let u: String
     let y: String
-    let hidden: Bool
+    var hidden: Bool
     var synced: Bool
     
     init(m: String?, n: String?, r: Rule, u: String, y: String) {
