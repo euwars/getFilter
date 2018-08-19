@@ -303,7 +303,6 @@ SMS text message</string>
                         <constraint firstAttribute="bottom" secondItem="POj-iK-SzQ" secondAttribute="bottom" id="Ehl-be-itg"/>
                         <constraint firstItem="POj-iK-SzQ" firstAttribute="leading" secondItem="qZh-LV-a2X" secondAttribute="leading" id="Omc-Tv-hj5"/>
                         <constraint firstItem="OTf-fc-66g" firstAttribute="top" secondItem="qZh-LV-a2X" secondAttribute="top" constant="8" id="Tbc-Td-tiS"/>
-                        <constraint firstAttribute="height" constant="64" id="Us5-eV-cLQ"/>
                         <constraint firstItem="qZh-LV-a2X" firstAttribute="bottom" secondItem="OTf-fc-66g" secondAttribute="bottom" constant="8" id="aQU-fD-NY7"/>
                         <constraint firstItem="qZh-LV-a2X" firstAttribute="trailing" secondItem="POj-iK-SzQ" secondAttribute="trailing" id="bY7-Xs-mjY"/>
                         <constraint firstItem="qZh-LV-a2X" firstAttribute="trailing" secondItem="ggs-0O-Oqx" secondAttribute="trailing" constant="25" id="eUi-8N-gPz"/>
@@ -327,6 +326,7 @@ SMS text message</string>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="6AS-X0-lNo" secondAttribute="trailing" id="RNe-Xi-mnP"/>
                 <constraint firstItem="lCD-XK-8lA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Tce-c6-f8D"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="DOh-MD-oEd" secondAttribute="trailing" id="WaK-Ag-4du"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="top" secondItem="6qI-zb-TlB" secondAttribute="bottom" constant="-44" id="ZXK-7g-Gjs"/>
                 <constraint firstItem="2Na-39-cgM" firstAttribute="width" secondItem="Kb0-OA-Vrt" secondAttribute="width" id="cUv-Hg-fpW"/>
                 <constraint firstItem="lCD-XK-8lA" firstAttribute="top" secondItem="6AS-X0-lNo" secondAttribute="bottom" constant="4" id="cxL-TN-VDK"/>
                 <constraint firstItem="DOh-MD-oEd" firstAttribute="top" secondItem="Kb0-OA-Vrt" secondAttribute="bottom" constant="4" id="eYP-8p-tHG"/>

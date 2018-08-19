@@ -209,12 +209,11 @@ class GetFilter {
     
     func countryRules(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
         do {
-            guard let countriesString = request.headers["country"], countriesString.count > 1 else {
+            guard let country = request.headers["country"], country.count > 1 else {
                 response.send(status: .notAcceptable)
                 next()
                 return
             }
-            let countries = countriesString.components(separatedBy: "|")
             
             var skip = 0
             if let skipq = request.headers["skip"], let skipi = Int(skipq) {
@@ -226,24 +225,21 @@ class GetFilter {
                 date = Date(timeIntervalSince1970: TimeInterval(datei))
             }
             
-            var result: [String: [[String: Any]]] = [:]
             
-            try countries.forEach { (country) in
-                let q: Query = "y" == country && "d" >= date
-                let matchingEntities: CollectionSlice<Document> = try self.numCol.find(q, skipping: skip, limitedTo: 1000)
-                let countryAll = matchingEntities.map { (doc) -> [String: Any] in
-                    var noID = doc
-                    noID.removeValue(forKey: "_id")
-                    noID.removeValue(forKey: "d")
-                    noID.removeValue(forKey: "y")
-                    noID.removeValue(forKey: "u")
-                    return noID.dictionaryRepresentation
-                }
-                
-                result[country] = countryAll
+            
+            let q: Query = "y" == country && "d" >= date
+            let matchingEntities: CollectionSlice<Document> = try self.numCol.find(q, skipping: skip, limitedTo: 1000)
+            let all = matchingEntities.map { (doc) -> Document in
+                var noID = doc
+                noID.removeValue(forKey: "_id")
+                noID.removeValue(forKey: "d")
+                noID.removeValue(forKey: "y")
+                noID.removeValue(forKey: "u")
+                return noID
             }
             
-            let encrypted = try ChaCha20.init(key: CommandLine.arguments[2], iv: String(CommandLine.arguments[2].prefix(12))).encrypt(result.makeBinary())
+            let encoded = try JSONEncoder().encode(all)
+            let encrypted = try ChaCha20.init(key: CommandLine.arguments[2], iv: String(CommandLine.arguments[2].prefix(12))).encrypt(encoded.bytes)
             response.send(Data(bytes: encrypted).base64EncodedString())
             next()
         } catch let err {
@@ -334,6 +330,12 @@ struct Number {
                 "n": n,
                 "w": w,
                 "y": y
+            ] as Document
+    }
+    
+    func short() -> Document {
+        return ["n": n,
+                "w": w,
             ] as Document
     }
 }

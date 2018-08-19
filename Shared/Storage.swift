@@ -101,6 +101,28 @@ class Storage {
         }
     }
     
+    func addUpdateCountry(countryRule: CountryRule) -> Promise<Int64> {
+        return Promise<Int64> { seal in
+            do {
+                
+                let local = crowds.filter(nu == countryRule.n)
+                let count = try db.scalar(local.count)
+                
+                if count > 0 {
+                    try db.run(local.update(w <- countryRule.w))
+                    seal.fulfill(0)
+                } else {
+                    let newRule = crowds.insert(nu <- countryRule.n, w <- countryRule.w)
+                    let ruleRow = try db.run(newRule)
+                    seal.fulfill(ruleRow)
+                }
+                
+            } catch let err {
+                seal.reject(err)
+            }
+        }
+    }
+    
     private func sendDataChangedNotification() -> Promise<Void> {
         return Promise<Void> { seal in
             NotificationCenter.default.post(Notification(name: .dataReload))
@@ -129,6 +151,12 @@ class Storage {
     private func mapped(seq: AnySequence<Row>) -> [UserRule] {
         return seq.map({ (row) -> UserRule in
             return UserRule(id: row[id], m: row[m], n: row[n], r: UserRule.Rule(rawValue: row[_r])!, u: row[u], y: row[y], synced: row[s], hidden: row[h])
+        })
+    }
+    
+    private func mapped(country seq: AnySequence<Row>) -> [CountryRule] {
+        return seq.map({ (row) -> CountryRule in
+            return CountryRule(number: row[nu], weight: row[w])
         })
     }
     
@@ -173,6 +201,12 @@ class Storage {
         guard let prepared = try? db.prepare(select) else { return [UserRule]() }
         return mapped(seq: prepared)
     }
+    
+    var countryRyles: [CountryRule] {
+        let select = crowds
+        guard let prepared = try? db.prepare(select) else { return [CountryRule]() }
+        return mapped(country: prepared)
+    }
 }
 
 
@@ -216,6 +250,16 @@ struct UserRule: Codable {
         self.y = y
         self.synced = synced
         self.hidden = hidden
+    }
+}
+
+struct CountryRule: Codable {
+    let n: String
+    let w: Int
+    
+    init(number: String, weight: Int) {
+        self.n = number
+        self.w = weight
     }
 }
 

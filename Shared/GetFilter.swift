@@ -29,7 +29,7 @@ class GetFilter {
     }
     
     @objc private func ssync() {
-        _ = sync()
+        _ = sync()        
     }
     
     var isSyncing = false
@@ -45,7 +45,9 @@ class GetFilter {
                         return self.syncSendUserRules()
                     }.then { () -> Promise<Void> in
                         return self.syncGetUserRules()
-                    }.done { () in
+                    }.then({ () -> Promise<Void> in
+                        return self.syncCountryRules()
+                    }).done { () in
                     }.catch { (err) in
                         print(err)
                     }.finally {
@@ -146,23 +148,37 @@ class GetFilter {
         }
     }
     
-    private func updateCountryRules() -> Promise<Void> {
+    private func syncCountryRules() -> Promise<Void> {
         return Promise<Void> { seal in
             let date = Date()
             var skip = 0
             func fetch() {
-                
-                
-                
-                
-                self.provider.request(target: GetFilterProvider.countryRules(country: "US", lastSync: date, skip: skip)).done({ (response) in
-                  
-                    
-                    
+                let country = "AT"
+                self.provider.request(target: GetFilterProvider.countryRules(country: country, lastSync: date, skip: skip)).done({ (response) in
+                    let s = Data(base64Encoded: response.data)!
+                    do {
+                        let decrypted = try ChaCha20.init(key: self.tempKey, iv: String(self.tempKey.prefix(12))).decrypt(s.bytes)
+                        let countryRules = try JSONDecoder().decode([CountryRule].self, from: Data(bytes: decrypted))
+                        countryRules.forEach({ (countryRule) in
+                            _ = self.storage.addUpdateCountry(countryRule: countryRule)
+                        })
+                        
+                        if countryRules.count == 1000 {
+                            skip += 1000
+                            fetch()
+                        } else {
+                            seal.fulfill(())
+                        }
+                        
+                    } catch let err {
+                        seal.reject(err)
+                    }
                 }).catch({ (err) in
                     seal.reject(err)
                 })
             }
+            
+            fetch()
         }
     }
     
