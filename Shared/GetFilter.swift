@@ -107,7 +107,10 @@ class GetFilter {
         return Promise<Void> { seal in
             let date = Date()
             self.provider.request(target: GetFilterProvider.deletedRules(user: userID, lastSync: date)).done({ (response) in
-                let s = Data(base64Encoded: response.data)!
+                guard let s = Data(base64Encoded: response.data) else {
+                    seal.fulfill(())
+                    return
+                }
                 do {
                     let decrypted = try ChaCha20.init(key: self.tempKey, iv: String(self.tempKey.prefix(12))).decrypt(s.bytes)
                     let deleteds = try JSONDecoder().decode([String].self, from: Data(bytes: decrypted))

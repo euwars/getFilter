@@ -116,11 +116,12 @@ class NewRuleViewController: UIViewController, SelectiveViewDelegate, UITextFiel
         tempRule?.m = text
         tempRule?.synced = false
         
-        let rule = (tempRule != nil) ? tempRule! : UserRule(m: text, n: number, r: (allowView.isSelected ? .a : .b), u: currentUser, y: numberField.defaultRegion)
+        let rule = (tempRule != nil) ? tempRule! : UserRule(m: text, n: number, r: (allowView.isSelected ? .a : .b), u: "_98b0f26c3ed9541cde96b0a325c85ba1", y: numberField.defaultRegion)
         gf.storage.newUpdateRule(rule: rule).done { () in
             self.dismiss(animated: true, completion: nil)
             }.catch { (err) in
-                print(err)
+                print(err.localizedDescription)
+                UIAlertController.error(error: err, source: self)
         }
     }
     
@@ -246,5 +247,14 @@ extension NewRuleViewController: KeyboardWrapperDelegate {
         }
         
         view.layoutIfNeeded()
+    }
+}
+
+extension UIAlertController {
+    static func error(error: Error, source: UIViewController) {
+        let vc = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        vc.addAction(ok)
+        source.present(vc, animated: true, completion: nil)
     }
 }

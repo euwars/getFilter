@@ -54,6 +54,11 @@
 		80CB63E82129B48200C5261C /* GetFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8038F31120D089B600119BB2 /* GetFilter.swift */; };
 		80CB63E92129B49200C5261C /* GetFilterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802663A220EBA64500B02280 /* GetFilterProvider.swift */; };
 		80CB63EA2129B55200C5261C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8064737320D072D80058093B /* Assets.xcassets */; };
+		80CB63EC2129EF8F00C5261C /* Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BE768520DD1222001F66CC /* Transition.swift */; };
+		80CB63ED2129EF9200C5261C /* ShadowedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8037E5E620DD28AD00E7B911 /* ShadowedViewController.swift */; };
+		80CB64212129FDE700C5261C /* NewRuleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B3F81520F211FD0090970D /* NewRuleViewController.swift */; };
+		80CB64222129FDEC00C5261C /* NewRuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B3F81720F212070090970D /* NewRuleViewController.xib */; };
+		80CB64232129FE4800C5261C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 809FE59620F002F70014FE6A /* CloudKit.framework */; };
 		D6220C6CF358A1071D409497 /* Pods_Block.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2212BB0B48B4DDF07B3E750 /* Pods_Block.framework */; };
 /* End PBXBuildFile section */
 
@@ -161,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AC8B73B39774FA9615F0EED /* Pods_Unwanted.framework in Frameworks */,
+				80CB64232129FE4800C5261C /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,6 +518,12 @@
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 					8064736820D072D80058093B = {
@@ -593,6 +605,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80CB64222129FDEC00C5261C /* NewRuleViewController.xib in Resources */,
 				80CB63EA2129B55200C5261C /* Assets.xcassets in Resources */,
 				8038F31E20D08F2100119BB2 /* MainInterface.storyboard in Resources */,
 			);
@@ -745,11 +758,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80CB63EC2129EF8F00C5261C /* Transition.swift in Sources */,
 				80CB63E82129B48200C5261C /* GetFilter.swift in Sources */,
 				80B3F81220F159B30090970D /* Storage.swift in Sources */,
 				8038F31B20D08F2100119BB2 /* UnwantedCommunicationReportingExtension.swift in Sources */,
 				80CB63E92129B49200C5261C /* GetFilterProvider.swift in Sources */,
+				80CB63ED2129EF9200C5261C /* ShadowedViewController.swift in Sources */,
 				8084EF8820D1B45B007C9CF2 /* GetFilterSpamClassification.mlmodel in Sources */,
+				80CB64212129FDE700C5261C /* NewRuleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

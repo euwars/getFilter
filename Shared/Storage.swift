@@ -34,8 +34,9 @@ class Storage {
     let nu = Expression<String>("nu")
     let w = Expression<Int>("w")
     
-    enum Errors: Error {
+    enum Errors: LocalizedError {
         case wrongRule
+        case repeated
     }
     
     init() {
@@ -82,7 +83,6 @@ class Storage {
                     throw Errors.wrongRule
                 }
                 
-                
                 let local = users.filter(id == rule.id)
                 let count = try db.scalar(local.count)
 
@@ -90,9 +90,27 @@ class Storage {
                     try db.run(local.update(m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, s <- rule.synced))
                     seal.fulfill(0)
                 } else {
-                    let newRule = users.insert(id <- rule.id, m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, u <- rule.u, y <- rule.y, h <- rule.hidden, s <- rule.synced)
-                    let ruleRow = try db.run(newRule)
-                    seal.fulfill(ruleRow)
+                    if let message = rule.m {
+                        let qm = users.filter(m == message)
+                        let c = try db.scalar(qm.count)
+                        if c > 0 {
+                            seal.reject(Errors.repeated)
+                        }else {
+                            let newRule = users.insert(id <- rule.id, m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, u <- rule.u, y <- rule.y, h <- rule.hidden, s <- rule.synced)
+                            let ruleRow = try db.run(newRule)
+                            seal.fulfill(ruleRow)
+                        }
+                    } else if let number = rule.n {
+                        let qn = users.filter(n == number)
+                        let c = try db.scalar(qn.count)
+                        if c > 0 {
+                            seal.reject(Errors.repeated)
+                        }else {
+                            let newRule = users.insert(id <- rule.id, m <- rule.m, n <- rule.n, _r <- rule.r.rawValue, u <- rule.u, y <- rule.y, h <- rule.hidden, s <- rule.synced)
+                            let ruleRow = try db.run(newRule)
+                            seal.fulfill(ruleRow)
+                        }
+                    }
                 }
 
             } catch let err {
