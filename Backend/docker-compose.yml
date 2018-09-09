@@ -1,0 +1,7 @@
+app:
+  image: ibmcom/swift-ubuntu:4.1.3
+  ports:
+    - "8080:8080"
+  volumes:
+    - .:/Backend
+  command: bash -c "cd /Backend && swift package --build-path .build-ubuntu clean && swift build --build-path .build-ubuntu && swift test --build-path .build-ubuntu"
