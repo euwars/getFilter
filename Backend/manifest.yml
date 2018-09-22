@@ -1,0 +1,10 @@
+applications:
+- name: getFilter
+  memory: 256M
+  instances: 1
+  random-route: true
+  disk_quota: 1024M
+  command: Backend
+  buildpack: swift_buildpack
+  #health-check-type: http
+  #health-check-http-endpoint: /health

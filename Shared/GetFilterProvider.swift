@@ -20,7 +20,7 @@ enum GetFilterProvider {
 
 extension GetFilterProvider: TargetType {
     var baseURL: URL {
-        return URL(string: "http://192.168.2.1:8080/")!
+        return URL(string: "https://getfilter.eu-de.mybluemix.net/")!
     }
     
     var path: String {

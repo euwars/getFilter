@@ -24,8 +24,8 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>ILClassificationExtensionSMSReportDestination</key>
-			<string>+12345678910</string>
+			<key>ILClassificationExtensionNetworkReportDestination</key>
+			<string>https://getfilter.eu-de.mybluemix.net/report</string>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>

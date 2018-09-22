@@ -20,6 +20,10 @@ class GetFilter {
     let provider = MoyaProvider<GetFilterProvider>()
     let storage = Storage()
     
+    enum Errors: LocalizedError {
+        case noDate
+    }
+    
     var userID: String!
     
     let tempKey = "djska321hjh321jkbhjdgsahg321hg31"
@@ -132,7 +136,11 @@ class GetFilter {
         return Promise<Void> { seal in
             let date = Date()
             self.provider.request(target: .userRules(user: userID, lastSync: date, skip: skip)).done({ (response) in
-                let s = Data(base64Encoded: response.data)!
+                guard let s = Data(base64Encoded: response.data) else {
+                    seal.reject(Errors.noDate)
+                    return
+                }
+                
                 do {
                     let decrypted = try ChaCha20.init(key: self.tempKey, iv: String(self.tempKey.prefix(12))).decrypt(s.bytes)
                     let rules = try JSONDecoder().decode([UserRule].self, from: Data(bytes: decrypted))
