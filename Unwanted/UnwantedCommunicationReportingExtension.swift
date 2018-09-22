@@ -10,6 +10,7 @@ import UIKit
 import IdentityLookup
 import IdentityLookupUI
 import PhoneNumberKit
+import CoreTelephony
 
 class UnwantedCommunicationReportingExtension: ILClassificationUIExtensionViewController, SelectiveViewDelegate {
     
@@ -52,11 +53,14 @@ class UnwantedCommunicationReportingExtension: ILClassificationUIExtensionViewCo
     override func prepare(for classificationRequest: ILClassificationRequest) {
         // Configure your views for the classification request
         if let calls = (classificationRequest as? ILCallClassificationRequest), let last = calls.callCommunications.last, let sender = last.sender {
-            
-            let phoneNumberKit = PhoneNumberKit()
-            let phoneNumber = try! phoneNumberKit.parse(sender)
-            let number = phoneNumberKit.format(phoneNumber, toType: .e164)
-            junkView.titleLabel?.text = phoneNumberKit.getRegionCode(of: phoneNumber)
+            do {
+                let phoneNumberKit = PhoneNumberKit()
+                let phoneNumber = try phoneNumberKit.parse(sender)
+                let number = phoneNumberKit.format(phoneNumber, toType: .e164)
+                junkView.titleLabel?.text = phoneNumberKit.getRegionCode(of: phoneNumber)
+            } catch let err {
+                
+            }
         }
     }
     
@@ -84,7 +88,7 @@ class UnwantedCommunicationReportingExtension: ILClassificationUIExtensionViewCo
                 response = ILClassificationResponse(action: .reportNotJunk)
                 rule = UserRule(m: nil, n: sender, r: UserRule.Rule.a, u: "anonymous", y: "a")
             }
-            last
+
         } else if let messages = (request as? ILMessageClassificationRequest), let last = messages.messageCommunications.last, let sender = last.sender {
             
             if junkView.isSelected {
